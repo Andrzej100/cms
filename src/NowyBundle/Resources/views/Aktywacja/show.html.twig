@@ -1,0 +1,72 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+  
+<div class="container">
+    <div class="col-md-4">
+    <table class="table">
+        <thead>
+        <tr>
+                <td>
+                     <h1>Aktywacja</h1>
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Od</th>
+                <td>{{ entity.od|date('Y-m-d') }}</td>
+            </tr>
+            <tr>
+                <th>Aktywacja</th>
+                <td>{{ entity.aktywacja|date('Y-m-d') }}</td>
+            </tr>
+            <tr>
+                <th>Do</th>
+                <td>{{ entity.do|date('Y-m-d') }}
+                    
+                    {% if entity.aktywacja ==null %}
+                        
+                        <span class="label label-danger">Dezaktywowane</span> 
+                       
+                    {%elseif entity.aktywacja|date('Y-m-d H:i:s') <= "now"|date('Y-m-d H:i:s') and entity.do|date('Y-m-d H:i:s') <=  "now"|date('Y-m-d H:i:s') %}
+                   
+                        <p><span class="label label-danger">Koniec aktywacji</span></p>
+                    
+                    {% elseif entity.aktywacja|date('Y-m-d H:i:s') <= "now"|date('Y-m-d H:i:s') and "+4 days"|date('Y-m-d H:i:s') >= entity.do|date('Y-m-d H:i:s') %}
+                    
+                        <p><span class="label label-warning">Aktywacja sie konczy</span></p>
+                        
+                    {% elseif entity.aktywacja|date('Y-m-d H:i:s') >= "now"|date('Y-m-d H:i:s') %}
+                        
+                        <span class="label label-success">Aktywne</span>{%endif%}
+                        
+                    {{ message }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('aktywacja') }}">
+            Powrót do listy
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('aktywacja_edit', { 'id': entity.id }) }}">
+            Edytuj
+        </a>
+    </li>
+    </ul>
+  
+                <div class="col-md-6">
+                    {{ form_start(delete_form) }}{{ form_errors(delete_form) }}{{ form_row(delete_form._token) }}{{ form_row(delete_form.submit, {'attr': {'class': 'form-control'},'label': 'Usuń' }) }}
+                </div>
+        
+        
+                    </div>
+{% endblock %}

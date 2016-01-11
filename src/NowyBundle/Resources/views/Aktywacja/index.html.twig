@@ -1,0 +1,84 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <div class="container">
+        {% include 'NowyBundle:Template:menu.html.twig' %}
+    
+    <h1>Aktywacja lista</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Dodano</th>
+                <th>Aktywacja</th>
+                <th>Do</th>
+                <th>Nrtelefonu</th>
+                <th>Uzytkownik</th>
+                <th>Pakiet</th>
+                <th>Akcje</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('aktywacja_show', { 'id': entity.id, 'mod':0 }) }}">{{ entity.id }}</a></td>
+                <td>{% if entity.od %}{{ entity.od|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if entity.aktywacja == null %}Nieaktywne
+                    {%else%}
+                    {{ entity.aktywacja|date('Y-m-d') }}   
+                    {% endif %}</td>
+                <td>{% if entity.do %}{{ entity.do|date('Y-m-d') }} {%endif%}</td>
+                <td>{{ entity.nrtelefon}}</td>
+                <td>{{ entity.nrtelefon.uzytkownik}}</td>
+                <td>{{ entity.package}}</td>
+                    
+                    
+                        <td>
+                    {% if entity.aktywacja == null %}
+                     <p>Nieaktywne 
+                         
+                        <a href="{{ path('aktywacja_edit', { 'id': entity.id}) }}">Aktywuj</a></p>
+                    
+                    {%elseif entity.aktywacja|date('Y-m-d H:i:s') >= "now"|date('Y-m-d H:i:s') and entity.do|date('Y-m-d H:i:s') <=  "now"|date('Y-m-d H:i:s') %}
+                   
+                    <p>Koniec aktywacji
+                 
+                        <a href="{{ path('aktywacja_show', { 'id': entity.id, 'mod':1 }) }}">Aktywuj</a> </p>
+                    
+                {% elseif entity.aktywacja|date('Y-m-d H:i:s') >= "now"|date('Y-m-d H:i:s') and "+4 days"|date('Y-m-d H:i:s') >= entity.do|date('Y-m-d H:i:s') %}
+                    
+                    <p>Aktywacja sie konczy
+                 
+                        <a href="{{ path('aktywacja_show', { 'id': entity.id, 'mod':1 }) }}">Aktywuj</a> </p>
+                
+                {% elseif entity.aktywacja|date('Y-m-d H:i:s') >= "now"|date('Y-m-d H:i:s') %}
+                         
+                         <p>Aktywne
+                             
+                             <a href="{{ path('aktywacja_show', { 'id': entity.id, 'mod':2 }) }}">Dezaktywuj</a> </p>
+                         
+                     {%endif%}
+                        </td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('aktywacja_show', { 'id': entity.id, 'mod':0 }) }}">Wyświetl</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('aktywacja_new') }}">
+               Utwórz Nowy Pakiet
+            </a>
+        </li>
+    </ul>
+              </div>  
+    {% endblock %}

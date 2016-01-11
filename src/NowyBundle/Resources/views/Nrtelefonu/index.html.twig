@@ -1,0 +1,48 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <div class="container">
+        {% include 'NowyBundle:Template:menu.html.twig' %}
+    <h1>Numery Telefonów</h1>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Numer</th>
+                <th>Imie</th>
+                <th>Nazwisko</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('nrtelefonu_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.numer }}</td>
+                <td>{{ entity.uzytkownik.name }}</td>
+                <td>{{ entity.uzytkownik.surname }}</td>
+                <td>
+                <ul class="list-inline">
+                    <li>
+                        <a href="{{ path('nrtelefonu_show', { 'id': entity.id }) }}">Wyswietl</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('nrtelefonu_edit', { 'id': entity.id }) }}">Edytuj</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('nrtelefonu_new') }}">
+                Dodaj Numer Telefonu
+            </a>
+        </li>
+    </ul>
+    </div>
+    {% endblock %}

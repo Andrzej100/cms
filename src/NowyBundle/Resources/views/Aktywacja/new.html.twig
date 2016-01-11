@@ -1,0 +1,42 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+ 
+     <script>
+  $(function() {
+    $( "#nowybundle_aktywacja_aktywacja" ).datepicker();
+    $( "#nowybundle_aktywacja_do" ).datepicker();
+  });
+  </script>
+    <div class="container">
+      
+    <h1>Aktywacja Utwórz</h1>
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_row(form._token) }}
+    <div style="display: none">{{ form_row(form.od, {'attr': {'class': 'form-control'},'label': ' ' })}}</div>
+    <div class="row">
+  <div class="col-md-2">{{ form_row(form.aktywacja)}}</div>
+  </div>
+  <div class="row">
+  <div class="col-md-2">{{ form_row(form.do)}}</div>
+  </div>
+  <div class="row">
+  <div class="col-md-2">{{ form_row(form.nrtelefon, {'attr': {'class': 'form-control'},'label': 'Numer telefonu' })}}</div>
+  </div>
+  <div class="row">
+  <div class="col-md-2">{{ form_row(form.package, {'attr': {'class': 'form-control'},'label': 'Pakiet' })}}</div>
+   </div>
+  <div class="row">
+      <div class="col-md-2"><h1>{{ form_widget(form.submit, {'attr': {'class': 'form-control'},'label': 'Utwórz' }) }}</h1></div>
+</div>
+     
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('aktywacja') }}">
+            Powrót do listy
+        </a>
+    </li>
+</ul>
+    </div>
+{% endblock %}

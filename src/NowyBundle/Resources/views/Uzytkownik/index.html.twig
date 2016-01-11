@@ -1,0 +1,45 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <div class="container">
+        {% include 'NowyBundle:Template:menu.html.twig' %}
+    <h1>Użytkownicy</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Imie</th>
+                <th>Nazwisko</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('uzytkownik_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.name }}</td>
+                <td>{{ entity.surname }}</td>
+                <td>
+                <ul class="list-inline">
+                    <li>
+                        <a href="{{ path('uzytkownik_show', { 'id': entity.id }) }}">Wyświetl</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('uzytkownik_edit', { 'id': entity.id }) }}">Edytuj</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('uzytkownik_new') }}">
+                Nowy Użytkownik
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+        {% stylesheets '%kernel.root_dir%/Resources/css/*' filter='cssrewrite' %}
+         <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+        {% endblock %}
+        {% image '%kernel.root_dir%/Resources/images/*'%}
+        {% endimage %}
+         
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        
+        {% block javascripts %}
+         {% javascripts '%kernel.root_dir%/Resources/js/*'  output='js/app.js'%}
+            <script src="{{ asset_url }}"></script>
+         {% endjavascripts %}
+        {% endblock %}
+        {% block body %}{% endblock %}
+    </body>
+</html>
